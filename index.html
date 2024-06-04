@@ -1,0 +1,178 @@
+<html>
+<head>
+    <title>Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #6dd5fa, #fbc2eb);
+            font-family: 'Arial', sans-serif;
+        }
+        .slider-item {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slider-item.active {
+            display: block;
+            opacity: 1;
+        }
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .dot.active {
+            background-color: #717171;
+        }
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="flex items-start justify-center min-h-screen pt-10">
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+    <div class="text-center">
+        <div class="relative">
+            <img src="ava.webp" alt="Profile picture of a woman with long blonde hair" class="w-24 h-24 rounded-full mx-auto">
+        </div>
+        <h1 class="text-white text-2xl font-semibold mt-4">Mia Jones</h1>
+        <p class="text-white text-sm">Health and Care</p>
+        <div class="mt-8 space-y-4">
+            <a href="#" class="block w-64 mx-auto bg-white text-black rounded-full py-3 flex items-center justify-center shadow-md">
+                <i class="fab fa-youtube mr-2"></i> Youtube
+            </a>
+            <a href="#" class="block w-64 mx-auto bg-white text-black rounded-full py-3 flex items-center justify-center shadow-md">
+                <i class="fab fa-reddit mr-2"></i> Reddit
+            </a>
+            <a href="#" class="block w-64 mx-auto bg-white text-black rounded-full py-3 flex items-center justify-center shadow-md">
+                <i class="fab fa-instagram mr-2"></i> Instagram
+            </a>
+            <a href="#" class="block w-64 mx-auto bg-white text-black rounded-full py-3 flex items-center justify-center shadow-md">
+                <i class="fab fa-tiktok mr-2"></i> Tiktok
+            </a>
+        </div>
+        <div class="mt-8">
+            <div class="slider">
+                <div class="slider-item active">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <img src="https://placehold.co/300x200" alt="Thumbnail of a delicious pasta dish" class="w-full h-36 rounded-t-lg">
+                        <div class="p-4">
+                            <p class="text-black mt-2">Delicious Pasta</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <img src="https://placehold.co/300x200" alt="Thumbnail of a fresh salad" class="w-full h-36 rounded-t-lg">
+                        <div class="p-4">
+                            <p class="text-black mt-2">Fresh Salad</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <img src="https://placehold.co/300x200" alt="Thumbnail of a gourmet burger" class="w-full h-36 rounded-t-lg">
+                        <div class="p-4">
+                            <p class="text-black mt-2">Gourmet Burger</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <img src="https://placehold.co/300x200" alt="Thumbnail of a sushi platter" class="w-full h-36 rounded-t-lg">
+                        <div class="p-4">
+                            <p class="text-black mt-2">Sushi Platter</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <div class="bg-white rounded-lg shadow-md">
+                        <img src="https://placehold.co/300x200" alt="Thumbnail of a chocolate cake" class="w-full h-36 rounded-t-lg">
+                        <div class="p-4">
+                            <p class="text-black mt-2">Chocolate Cake</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dots">
+                <span class="dot active" onclick="showSlide(0)"></span>
+                <span class="dot" onclick="showSlide(1)"></span>
+                <span class="dot" onclick="showSlide(2)"></span>
+                <span class="dot" onclick="showSlide(3)"></span>
+                <span class="dot" onclick="showSlide(4)"></span>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        let startX = 0;
+        let endX = 0;
+
+        document.querySelector('.slider').addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        document.querySelector('.slider').addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            if (startX > endX + 50) {
+                showSlide((currentSlide + 1) % slides.length);
+            } else if (startX < endX - 50) {
+                showSlide((currentSlide - 1 + slides.length) % slides.length);
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
